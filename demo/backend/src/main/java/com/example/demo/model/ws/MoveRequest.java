@@ -8,4 +8,6 @@ public class MoveRequest {
     private int row;
     private int col;
     private int value;
+    private String sessionId;
+
 }
