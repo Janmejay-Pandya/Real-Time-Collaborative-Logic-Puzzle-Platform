@@ -5,10 +5,13 @@ FROM maven:3.9.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-# Copy Maven config first (for caching)
+# Copy Maven config
 COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw mvnw
+
+# ✅ FIX: Give execute permission to mvnw
+RUN chmod +x mvnw
 
 # Download dependencies
 RUN ./mvnw dependency:go-offline
@@ -16,7 +19,7 @@ RUN ./mvnw dependency:go-offline
 # Copy source code
 COPY src src
 
-# Build Spring Boot jar
+# Build the application
 RUN ./mvnw clean package -DskipTests
 
 
@@ -27,11 +30,8 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-# Copy built jar from build stage
 COPY --from=build /app/target/*SNAPSHOT.jar app.jar
 
-# Expose Spring Boot port
-EXPOSE 8082
+EXPOSE 8080
 
-# Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
