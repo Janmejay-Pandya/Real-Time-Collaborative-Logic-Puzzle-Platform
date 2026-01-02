@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/puzzle")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class PuzzleRestController {
 
     private final PuzzleService puzzleService;
