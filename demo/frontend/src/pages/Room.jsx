@@ -16,7 +16,7 @@ export default function Room() {
         const fetchBoard = async () => {
             try {
                 try {
-                    const res = await axios.get(`http://localhost:8082/api/puzzle/${roomId}`);
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/puzzle/${roomId}`);
                     if (res.data && res.data.grid) {
                         dispatch(loadBoard(res.data.grid));
                         return;

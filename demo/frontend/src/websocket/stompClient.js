@@ -11,7 +11,7 @@ export function connectWS(roomId) {
     stompClient.disconnect();
   }
 
-  const socket = new SockJS("http://localhost:8082/ws");
+  const socket = new SockJS(import.meta.env.VITE_API_URL + "/ws");
   stompClient = Stomp.over(socket);
 
   stompClient.connect({}, frame => {
